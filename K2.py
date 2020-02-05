@@ -55,8 +55,7 @@ def print_db(wheatherdb): #display avg, min, max temperature from database
 def create_connection():
     wheatherdb = None 
     try:
-        wheatherdb = sqlite3.connect(':memory:') #create a database in RAM
-        #wheatherdb = sqlite3.connect(r".\weather_file1.db") #create a database on disk (current folder)
+        wheatherdb = sqlite3.connect(r".\weather_file.db") #create a database on disk (current folder)
     except Error as e:
         print(e) #print error if error occurs
     if wheatherdb is not None:
@@ -83,15 +82,16 @@ def write_to_db(wheatherdb, weather):
         weather['weather'][0]['description'])
     c = wheatherdb.cursor()
     c.execute("insert into data values (?,?,?,?,?,?,?,?)", row) #store data in database
+    wheatherdb.commit() #commit the data do database
 
 def main():
-    wheatherdb=create_connection()
     k2 = {"lat": "35.88", "lon": "76.51"} #define coordinates
     key = {"APPID": "8aadfa69e450f31dad65406b2ba9eb34"} #define OpenWeather API key
     unit = {"units": "metric"} #define units, default=metric
     datastr = {**k2, **key, **unit} #create data string for url request
     sleep_time = 3 #time
     while True:
+        wheatherdb=create_connection() #create database connection
         weather = get_weather(datastr) #fetch weather data
         forecast = get_forecast(datastr) #fetch forecast data
         if weather['cod'] in [200]: #chceck if wheather was correctly updated
@@ -110,7 +110,9 @@ def main():
             print("Error: Too many inquiries (forecast).")
         else: #if any other error occured while fetching forecast data
             print("An error occured while fetching forecast.")
+        wheatherdb.close() #close database connection
         plt.pause(sleep_time)  #wait for a defined amount of seconds + fix for not plotting while in loop while using time.sleep()
-
+        
 if __name__== "__main__":
-  main()    
+  main()
+   
