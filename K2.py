@@ -16,6 +16,7 @@ def get_forecast(datastr):
     return r.json()
 
 def plot_forecast(forecast):
+    plt.close("all") #closes all active plots
     x=[forecast['list'][i]['dt_txt'] for i in range(40)] #x axis get time data
     x2=[forecast['list'][i]['weather'][0]['description'] for i in range(40)] #x2 axis labels to get weather description
     y1=[forecast['list'][i]['main']['temp'] for i in range(40)] #y1 axis get temperature data
@@ -41,7 +42,9 @@ def plot_forecast(forecast):
     ax3.set_xticklabels(x2, rotation=90) #rotate the xtick labels labels for visibility
     ax3.set_ylabel("Humidity [%]", color='b') #setting the humidity label
     ax4.set_ylabel("Atmospheric pressure [mPa]", color='r') #setting the pressure label
+    plt.draw() #make sure to draw the plots
     print("\n") #endline after plot
+    
     
 def display_weather(weather): #display current weather data
     print("Current weather:")
