@@ -16,7 +16,7 @@ Just run the K2.py file.
 K2 is preconfigured to display live weather as well as 5-day forecast for K2 summit.
 Once run, the script will display live data and store it in a local database file.
 Below the live weather, there will be displayed the average temperature from the database, as well as min and max temperature recorded.
-At last, the 5-day forecast plot is displayed.
+At last, the 5-day forecast plot is displayed. The forecast has a resolution of three hours.
 
 The script will automatically refresh every 3 seconds, fetching new data.
 
