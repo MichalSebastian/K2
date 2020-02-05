@@ -6,6 +6,8 @@ Use the package manager pip to install required libraries:
 ```bash
 $ pip install -r requirements.txt
 ```
+Written for Python 3.7.
+
 An internet connection is required to fetch the data.
 
 ## Usage
